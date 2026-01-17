@@ -1,13 +1,18 @@
-document.getElementById("arlCheck").addEventListener("change", function () {
-  document.getElementById("arlNivel").disabled = !this.checked;
+const arlCheck = document.getElementById("arlCheck");
+const arlNivel = document.getElementById("arlNivel");
+const ccfCheck = document.getElementById("ccfCheck");
+const ccfPorcentaje = document.getElementById("ccfPorcentaje");
+
+arlCheck.addEventListener("change", () => {
+  arlNivel.disabled = !arlCheck.checked;
 });
 
-document.getElementById("ccfCheck").addEventListener("change", function () {
-  document.getElementById("ccfPorcentaje").disabled = !this.checked;
+ccfCheck.addEventListener("change", () => {
+  ccfPorcentaje.disabled = !ccfCheck.checked;
 });
 
 function calcular() {
-  const ingreso = parseFloat(document.getElementById("ingreso").value);
+  const ingreso = Number(document.getElementById("ingreso").value);
   if (!ingreso || ingreso <= 0) {
     alert("Ingrese un valor válido");
     return;
@@ -18,23 +23,24 @@ function calcular() {
   const pension = ibc * 0.16;
 
   let arl = 0;
-  if (document.getElementById("arlCheck").checked) {
-    arl = ibc * parseFloat(document.getElementById("arlNivel").value);
+  if (arlCheck.checked && arlNivel.value) {
+    arl = ibc * (arlNivel.value / 100);
   }
 
   let ccf = 0;
-  if (document.getElementById("ccfCheck").checked) {
-    ccf = ibc * parseFloat(document.getElementById("ccfPorcentaje").value);
+  if (ccfCheck.checked && ccfPorcentaje.value) {
+    ccf = ibc * (ccfPorcentaje.value / 100);
   }
 
   const total = salud + pension + arl + ccf;
 
   document.getElementById("resultado").innerHTML = `
-    <strong>Ingreso Base de Cotización (40%):</strong> $${ibc.toLocaleString()}<br><br>
-    Salud (12.5%): $${salud.toLocaleString()}<br>
-    Pensión (16%): $${pension.toLocaleString()}<br>
-    ARL: $${arl.toLocaleString()}<br>
-    Caja de Compensación: $${ccf.toLocaleString()}<br><br>
-    <strong>Total aporte mensual: $${total.toLocaleString()}</strong>
+    <h3>Resultado</h3>
+    <p>IBC: $${ibc.toLocaleString()}</p>
+    <p>Salud: $${salud.toLocaleString()}</p>
+    <p>Pensión: $${pension.toLocaleString()}</p>
+    <p>ARL: $${arl.toLocaleString()}</p>
+    <p>CCF: $${ccf.toLocaleString()}</p>
+    <h4>Total: $${total.toLocaleString()}</h4>
   `;
 }
