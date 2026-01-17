@@ -1,115 +1,52 @@
-:root {
-  --oliva: #6b8e7a;
-  --oliva-oscuro: #4f6f64;
-  --champinon: #f4f1ec;
-  --fondo: #fafafa;
-}
-
-* {
-  box-sizing: border-box;
-}
-
 body {
+  font-family: Arial, sans-serif;
+  background: #efefe9;
   margin: 0;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: var(--fondo);
-  color: #333;
+  padding: 0;
 }
 
 .container {
-  max-width: 900px;
+  max-width: 520px;
   margin: auto;
+  background: #f8f7f3;
   padding: 20px;
-}
-
-header {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-h1 {
-  color: var(--oliva-oscuro);
-}
-
-.intro {
-  max-width: 700px;
-  margin: auto;
-}
-
-.form-section {
-  background: var(--champinon);
-  padding: 25px;
   border-radius: 12px;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #556b2f;
 }
 
 label {
-  font-weight: 600;
+  font-weight: bold;
 }
 
-input, select {
+input, select, button {
   width: 100%;
+  margin-top: 8px;
+  margin-bottom: 15px;
   padding: 10px;
-  margin-top: 6px;
-  margin-bottom: 12px;
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid #ccc;
 }
 
-.section {
-  margin-top: 15px;
-}
-
-.row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-
 button {
-  width: 100%;
-  padding: 14px;
-  background: var(--oliva);
-  color: white;
-  border: none;
-  border-radius: 8px;
+  background: #a3b18a;
+  color: #fff;
   font-size: 16px;
-  cursor: pointer;
+  border: none;
 }
 
-button:hover {
-  background: var(--oliva-oscuro);
-}
-
-#resultado {
-  margin-top: 20px;
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-}
-
-.info {
-  margin-top: 40px;
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-}
-
-.info h2 {
-  color: var(--oliva-oscuro);
+.box {
+  background: #edece6;
+  padding: 10px;
+  border-radius: 8px;
 }
 
 footer {
-  margin-top: 40px;
-  background: var(--oliva-oscuro);
-  color: white;
   text-align: center;
-  padding: 15px;
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 22px;
-  }
+  margin-top: 20px;
+  font-size: 14px;
+  color: #555;
 }
