@@ -38,14 +38,17 @@ label {
 
 input, select {
     width: 100%;
-    padding: 8px;
-    margin-top: 4px;
-    border-radius: 6px;
+    max-width: 360px;      /* 👈 evita que se pegue a los bordes */
+    padding: 10px 14px;
+    margin-top: 6px;
+    border-radius: 8px;
     border: 1px solid #ccc;
+    background: #faf9f4;
 }
 
 .fila {
-    margin-top: 10px;
+    display: flex;
+    justify-content: center;
 }
 
 .botones {
