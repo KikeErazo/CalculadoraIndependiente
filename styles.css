@@ -39,7 +39,7 @@ label {
 input, select {
     width: 100%;
     max-width: 360px;      /* 👈 evita que se pegue a los bordes */
-    padding: 20px 14px;
+    padding: 10px 14px;
     margin-top: 6px;
     border-radius: 8px;
     border: 1px solid #ccc;
