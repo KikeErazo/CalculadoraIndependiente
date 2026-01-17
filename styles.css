@@ -1,32 +1,58 @@
+:root {
+  --oliva: #6b8e7a;
+  --oliva-oscuro: #4f6f64;
+  --champinon: #f4f1ec;
+  --fondo: #fafafa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background: #f2f2f2;
-  padding: 20px;
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--fondo);
+  color: #333;
 }
 
 .container {
-  background: #fff;
-  padding: 20px;
-  max-width: 600px;
+  max-width: 900px;
   margin: auto;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 h1 {
-  text-align: center;
-  color: #2c3e50;
+  color: var(--oliva-oscuro);
+}
+
+.intro {
+  max-width: 700px;
+  margin: auto;
+}
+
+.form-section {
+  background: var(--champinon);
+  padding: 25px;
+  border-radius: 12px;
 }
 
 label {
-  margin-top: 10px;
-  display: block;
+  font-weight: 600;
 }
 
 input, select {
   width: 100%;
-  padding: 8px;
-  margin-top: 5px;
+  padding: 10px;
+  margin-top: 6px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
 .section {
@@ -37,21 +63,53 @@ input, select {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
 }
 
 button {
   width: 100%;
-  padding: 12px;
-  margin-top: 20px;
-  background: #2c3e50;
+  padding: 14px;
+  background: var(--oliva);
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--oliva-oscuro);
 }
 
 #resultado {
   margin-top: 20px;
-  background: #eef3ff;
+  background: white;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
+}
+
+.info {
+  margin-top: 40px;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+}
+
+.info h2 {
+  color: var(--oliva-oscuro);
+}
+
+footer {
+  margin-top: 40px;
+  background: var(--oliva-oscuro);
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 22px;
+  }
 }
