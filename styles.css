@@ -1,167 +1,114 @@
 :root {
-    --oliva: #8f9b6c;
-    --oliva-claro: #e9eddc;
-    --champinon: #f4efe6;
-    --champinon-oscuro: #e3dac8;
+    --oliva: #7a8450;
+    --champinon: #e7ddc8;
+    --fondo: linear-gradient(135deg, #eef1e6, #e7ddc8);
     --texto: #2f2f2f;
 }
 
-/* Fondo general */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #f7f8f2, #f1eadf);
+    background: var(--fondo);
     color: var(--texto);
 }
 
-/* Contenedor principal */
 .contenedor {
-    max-width: 650px;
-    margin: 25px auto;
-    padding: 25px;
-    background: #ffffff;
-    border-radius: 14px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    max-width: 600px;
+    margin: 20px auto;
+    background: #ffffffcc;
+    padding: 20px;
+    border-radius: 12px;
 }
 
-/* Títulos */
 h1 {
     text-align: center;
     color: var(--oliva);
-    margin-bottom: 10px;
 }
 
-h2 {
-    color: var(--oliva);
-    margin-top: 0;
-}
-
-/* Texto introductorio */
 .intro {
     text-align: center;
     font-size: 0.95em;
-    margin-bottom: 20px;
 }
 
-/* Etiquetas */
 label {
-    font-weight: bold;
-    margin-bottom: 4px;
     display: block;
+    margin-top: 12px;
+    font-weight: bold;
 }
 
-/* Inputs y selects */
 input, select {
     width: 100%;
-    padding: 9px;
-    border-radius: 8px;
+    padding: 8px;
+    margin-top: 4px;
+    border-radius: 6px;
     border: 1px solid #ccc;
-    background: var(--champinon);
 }
 
-/* Cajones */
 .fila {
-    background: var(--oliva-claro);
-    padding: 12px;
-    border-radius: 10px;
-    margin-top: 12px;
+    margin-top: 10px;
 }
 
-/* Botones */
 .botones {
     display: flex;
-    gap: 12px;
-    margin-top: 18px;
+    gap: 10px;
+    margin-top: 15px;
 }
 
 .btn-calcular {
     flex: 1;
-    background: linear-gradient(135deg, #8f9b6c, #aab58a);
+    background: var(--oliva);
     color: white;
     border: none;
-    padding: 12px;
+    padding: 10px;
     font-weight: bold;
-    font-size: 1em;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.btn-calcular:hover {
-    opacity: 0.9;
+    border-radius: 8px;
 }
 
 .btn-nuevo {
     flex: 1;
-    background: var(--champinon-oscuro);
+    background: #cfc8b0;
     border: none;
-    padding: 12px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-/* Resultado */
-.resultado {
-    margin-top: 22px;
-    background: var(--champinon);
-    padding: 18px;
-    border-radius: 12px;
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
-}
-
-.resultado div {
-    margin-bottom: 6px;
-}
-
-/* Total */
-.resultado .total {
-    font-weight: bold;
-    font-size: 1.3em;
-    margin-top: 10px;
-    color: #000;
-}
-
-/* Alerta IBC mínimo */
-.alerta {
-    background: #fff4cc;
     padding: 10px;
     border-radius: 8px;
-    margin-bottom: 12px;
-    font-size: 0.9em;
 }
 
-/* Explicación */
+.resultado {
+    margin-top: 20px;
+    background: #f5f3ed;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.resultado .total {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-top: 8px;
+}
+
+.alerta {
+    background: #fff3cd;
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
 .explicacion {
-    margin-top: 28px;
-    background: var(--oliva-claro);
-    padding: 16px;
-    border-radius: 12px;
+    margin-top: 25px;
     font-size: 0.9em;
 }
 
-.explicacion ul {
-    padding-left: 18px;
+footer {
+    text-align: center;
+    padding: 15px;
+    font-size: 0.85em;
+    color: #555;
 }
 
-/* Ocultar */
 .oculto {
     display: none;
 }
 
-/* Footer */
-footer {
-    text-align: center;
-    padding: 18px 10px;
-    margin-top: 30px;
-    font-size: 0.9em;
-    color: #555;
-}
-
-footer strong {
-    font-weight: bold;
-    color: #000;
-}
-
-/* Responsive */
+/* RESPONSIVE */
 @media (max-width: 600px) {
     .botones {
         flex-direction: column;
