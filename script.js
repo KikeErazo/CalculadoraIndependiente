@@ -62,7 +62,16 @@ function calcular() {
   let ibcCalculado = ingreso * 0.4;
 
   // Asegurar que IBC nunca sea menor que SMMLV
-  let ibc = ibcCalculado < SMMLV_2026 ? SMMLV_2026 : ibcCalculado;
+  let ibcCalculado = ingreso * 0.4;
+let aplicaMinimo = false;
+
+let ibc;
+if (ibcCalculado < SMMLV_2026) {
+  ibc = SMMLV_2026;
+  aplicaMinimo = true;
+} else {
+  ibc = ibcCalculado;
+}
 
   // ====== APORTES ======
   const salud = ibc * 0.125;
@@ -82,15 +91,23 @@ function calcular() {
 
   // ====== MOSTRAR RESULTADOS ======
   resultadoDiv.innerHTML = `
-    <h3>Resultado</h3>
-    <p><strong>IBC (base mínima cop):</strong> $${formatoCOP(ibc)}</p>
-    <p>Salud (12.5%): $${formatoCOP(salud)}</p>
-    <p>Pensión (16%): $${formatoCOP(pension)}</p>
-    <p>ARL: $${formatoCOP(arl)}</p>
-    <p>CCF: $${formatoCOP(ccf)}</p>
-    <hr>
-    <h4>Total a pagar: $${formatoCOP(total)}</h4>
-  `;
+  <h3>Resultado</h3>
+  <p><strong>IBC:</strong> $${formatoCOP(ibc)}</p>
+
+  ${aplicaMinimo ? `
+    <p class="alerta">
+      ⚠️ El IBC se ajustó al salario mínimo legal vigente 2026
+      ($${formatoCOP(SMMLV_2026)}), conforme a la normativa colombiana.
+    </p>
+  ` : ""}
+
+  <p>Salud (12.5%): $${formatoCOP(salud)}</p>
+  <p>Pensión (16%): $${formatoCOP(pension)}</p>
+  <p>ARL: $${formatoCOP(arl)}</p>
+  <p>CCF: $${formatoCOP(ccf)}</p>
+  <hr>
+  <h4>Total a pagar: $${formatoCOP(total)}</h4>
+`;
 }
 
 // ===============================
