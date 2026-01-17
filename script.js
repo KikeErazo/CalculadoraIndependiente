@@ -1,10 +1,10 @@
-const SMMLV_2026 = 1423500;
+const SMMLV_2026 = 1750905;
 
 const ingresoInput = document.getElementById("ingreso");
 const arlCheck = document.getElementById("arlCheck");
 const arlNivelBox = document.getElementById("arlNivelBox");
 const ccfCheck = document.getElementById("ccfCheck");
-const ccfPorcentajeBox = document.getElementById("ccfPorcentajeBox");
+const ccfBox = document.getElementById("ccfBox");
 const resultadoDiv = document.getElementById("resultado");
 
 arlCheck.addEventListener("change", () => {
@@ -12,17 +12,13 @@ arlCheck.addEventListener("change", () => {
 });
 
 ccfCheck.addEventListener("change", () => {
-    ccfPorcentajeBox.classList.toggle("oculto", ccfCheck.value === "no");
+    ccfBox.classList.toggle("oculto", ccfCheck.value === "no");
 });
 
 ingresoInput.addEventListener("input", () => {
     let valor = ingresoInput.value.replace(/\D/g, "");
-    ingresoInput.value = valor ? formatoMoneda(valor) : "";
+    ingresoInput.value = valor ? "$ " + Number(valor).toLocaleString("es-CO") : "";
 });
-
-function formatoMoneda(valor) {
-    return "$ " + Number(valor).toLocaleString("es-CO");
-}
 
 function formatoCOP(valor) {
     return Math.round(valor).toLocaleString("es-CO");
@@ -41,14 +37,12 @@ function calcular() {
 
     let arl = 0;
     if (arlCheck.value === "si") {
-        const porcentajeArl = document.getElementById("arlNivel").value / 100;
-        arl = ibc * porcentajeArl;
+        arl = ibc * (document.getElementById("arlNivel").value / 100);
     }
 
     let ccf = 0;
     if (ccfCheck.value === "si") {
-        const porcentajeCcf = document.getElementById("ccfPorcentaje").value / 100;
-        ccf = ibc * porcentajeCcf;
+        ccf = ibc * (document.getElementById("ccfPorcentaje").value / 100);
     }
 
     let total = salud + pension + arl + ccf;
@@ -75,5 +69,5 @@ function nuevoCalculo() {
     arlCheck.value = "no";
     ccfCheck.value = "no";
     arlNivelBox.classList.add("oculto");
-    ccfPorcentajeBox.classList.add("oculto");
+    ccfBox.classList.add("oculto");
 }
