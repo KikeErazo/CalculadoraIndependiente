@@ -1,59 +1,79 @@
-const ingresoInput = document.getElementById("ingreso");
+const SMMLV_2026 = 1423500;
 
-// SMLMV 2026 (ajústalo si cambia)
-const SMLMV_2026 = 1600000;
+const ingresoInput = document.getElementById("ingreso");
+const arlCheck = document.getElementById("arlCheck");
+const arlNivelBox = document.getElementById("arlNivelBox");
+const ccfCheck = document.getElementById("ccfCheck");
+const ccfPorcentajeBox = document.getElementById("ccfPorcentajeBox");
+const resultadoDiv = document.getElementById("resultado");
+
+arlCheck.addEventListener("change", () => {
+    arlNivelBox.classList.toggle("oculto", arlCheck.value === "no");
+});
+
+ccfCheck.addEventListener("change", () => {
+    ccfPorcentajeBox.classList.toggle("oculto", ccfCheck.value === "no");
+});
 
 ingresoInput.addEventListener("input", () => {
     let valor = ingresoInput.value.replace(/\D/g, "");
-    ingresoInput.value = formatoPesos(valor);
+    ingresoInput.value = valor ? formatoMoneda(valor) : "";
 });
 
-function formatoPesos(valor) {
-    if (!valor) return "";
-    return "$" + Number(valor).toLocaleString("es-CO");
+function formatoMoneda(valor) {
+    return "$ " + Number(valor).toLocaleString("es-CO");
+}
+
+function formatoCOP(valor) {
+    return Math.round(valor).toLocaleString("es-CO");
 }
 
 function calcular() {
-    let ingreso = ingresoInput.value.replace(/\D/g, "");
+    const ingreso = Number(ingresoInput.value.replace(/\D/g, ""));
     if (!ingreso) return;
 
-    ingreso = Number(ingreso);
+    let ibcCalculado = ingreso * 0.4;
+    let aplicaMinimo = ibcCalculado < SMMLV_2026;
+    let ibc = aplicaMinimo ? SMMLV_2026 : ibcCalculado;
 
-    // IBC = 40% del ingreso
-    let ibc = ingreso * 0.4;
+    let salud = ibc * 0.125;
+    let pension = ibc * 0.16;
 
-    // IBC mínimo = SMLMV 2026
-    if (ibc < SMLMV_2026) {
-        ibc = SMLMV_2026;
+    let arl = 0;
+    if (arlCheck.value === "si") {
+        const porcentajeArl = document.getElementById("arlNivel").value / 100;
+        arl = ibc * porcentajeArl;
     }
 
-    const salud = ibc * 0.125;
-    const pension = ibc * 0.16;
+    let ccf = 0;
+    if (ccfCheck.value === "si") {
+        const porcentajeCcf = document.getElementById("ccfPorcentaje").value / 100;
+        ccf = ibc * porcentajeCcf;
+    }
 
-    const arlPorc = Number(document.getElementById("arl").value);
-    const arl = ibc * arlPorc;
+    let total = salud + pension + arl + ccf;
 
-    const ccfPorc = Number(document.getElementById("ccf").value);
-    const ccf = ibc * ccfPorc;
+    resultadoDiv.innerHTML = `
+        ${aplicaMinimo ? `
+        <div class="alerta">
+            El IBC fue ajustado al salario mínimo legal vigente 2026
+            ($${formatoCOP(SMMLV_2026)}).
+        </div>` : ""}
 
-    const total = salud + pension + arl + ccf;
-
-    const resultado = document.getElementById("resultado");
-    resultado.classList.remove("oculto");
-
-    resultado.innerHTML = `
-        <div>IBC aplicado: ${formatoPesos(ibc)}</div>
-        <div>Salud (12.5%): ${formatoPesos(Math.round(salud))}</div>
-        <div>Pensión (16%): ${formatoPesos(Math.round(pension))}</div>
-        <div>ARL: ${formatoPesos(Math.round(arl))}</div>
-        <div>Caja de Compensación: ${formatoPesos(Math.round(ccf))}</div>
-        <div class="total">TOTAL A PAGAR: ${formatoPesos(Math.round(total))}</div>
+        <div>IBC: $${formatoCOP(ibc)}</div>
+        <div>Salud (12.5%): $${formatoCOP(salud)}</div>
+        <div>Pensión (16%): $${formatoCOP(pension)}</div>
+        <div>ARL: $${formatoCOP(arl)}</div>
+        <div>CCF: $${formatoCOP(ccf)}</div>
+        <div class="total">Total a pagar: $${formatoCOP(total)}</div>
     `;
 }
 
 function nuevoCalculo() {
     ingresoInput.value = "";
-    document.getElementById("arl").value = "0";
-    document.getElementById("ccf").value = "0";
-    document.getElementById("resultado").classList.add("oculto");
+    resultadoDiv.innerHTML = "";
+    arlCheck.value = "no";
+    ccfCheck.value = "no";
+    arlNivelBox.classList.add("oculto");
+    ccfPorcentajeBox.classList.add("oculto");
 }
