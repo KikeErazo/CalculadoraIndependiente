@@ -134,6 +134,11 @@ input, select {
     display: none;
 }
 
+.total {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
 @media (max-width: 480px) {
     .fila {
         flex-direction: column;
