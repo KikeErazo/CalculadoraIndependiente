@@ -86,6 +86,15 @@ button {
   margin-bottom: 10px;
 }
 
+.alerta {
+  background: #f3efe3;
+  border-left: 4px solid #8b7d3a;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 14px;
+  color: #5a5a3a;
+}
+
 footer {
   text-align: center;
   margin-top: 20px;
