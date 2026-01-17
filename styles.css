@@ -6,11 +6,11 @@ body {
 }
 
 .container {
-  max-width: 520px;
+  max-width: 540px;
   margin: auto;
   background: #f8f7f3;
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 14px;
 }
 
 h1, h2 {
@@ -22,7 +22,13 @@ label {
   font-weight: bold;
 }
 
-input, select, button {
+.inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+input, select {
   width: 100%;
   margin-top: 8px;
   margin-bottom: 15px;
@@ -31,17 +37,45 @@ input, select, button {
   border: 1px solid #ccc;
 }
 
-button {
-  background: #a3b18a;
-  color: #fff;
-  font-size: 16px;
-  border: none;
-}
-
 .box {
   background: #edece6;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 16px;
+  border: none;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.btn-calcular {
+  background: #3f4f2f;
+  color: #fff;
+  font-weight: bold;
+}
+
+.btn-nuevo {
+  background: #a3b18a;
+  color: #fff;
+}
+
+#resultado {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+#resultado h4 {
+  font-weight: bold;
+  font-size: 18px;
+  color: #3f4f2f;
 }
 
 footer {
