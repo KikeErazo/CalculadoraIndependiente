@@ -1,40 +1,95 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora de Aportes - Independientes</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Aportes – Independientes</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <div class="container">
     <h1>Calculadora de Aportes<br>Independientes y Contratistas</h1>
 
-    <label>Ingreso mensual (COP)</label>
-    <input type="text" id="ingreso" placeholder="$0">
+    <p class="intro">
+        Conoce de forma clara y sencilla cuánto debes aportar a seguridad social si eres
+        trabajador independiente o contratista en Colombia, según la normativa vigente.
+    </p>
+
+    <label for="ingreso">Ingreso mensual (COP)</label>
+    <input type="text" id="ingreso" placeholder="$ 1.423.500">
 
     <div class="fila">
         <label>¿Aporta a ARL?</label>
-        <select id="arl">
-            <option value="0">No</option>
-            <option value="0.00522">Riesgo I - 0.522%</option>
-            <option value="0.01044">Riesgo II - 1.044%</option>
-            <option value="0.02436">Riesgo III - 2.436%</option>
-            <option value="0.04350">Riesgo IV - 4.350%</option>
-            <option value="0.06960">Riesgo V - 6.960%</option>
+        <select id="arlCheck">
+            <option value="no">No</option>
+            <option value="si">Sí</option>
+        </select>
+    </div>
+
+    <div class="fila oculto" id="arlNivelBox">
+        <label>Nivel de riesgo ARL</label>
+        <select id="arlNivel">
+            <option value="0.522">Riesgo I – 0.522%</option>
+            <option value="1.044">Riesgo II – 1.044%</option>
+            <option value="2.436">Riesgo III – 2.436%</option>
+            <option value="4.350">Riesgo IV – 4.350%</option>
+            <option value="6.960">Riesgo V – 6.960%</option>
         </select>
     </div>
 
     <div class="fila">
-        <label>¿Aporta a Caja de Compensación?</label>
-        <select id="ccf">
-            <option value="0">No</option>
-            <option value="0.04">Sí (4%)</option>
+        <label>¿Aporta a Caja de Compensación? (Voluntario)</label>
+        <select id="ccfCheck">
+            <option value="no">No</option>
+            <option value="si">Sí</option>
+        </select>
+    </div>
+
+    <div class="fila oculto" id="ccfPorcentajeBox">
+        <label>Porcentaje CCF</label>
+        <select id="ccfPorcentaje">
+            <option value="4">4%</option>
+            <option value="2">2%</option>
+            <option value="0.6">0.6%</option>
         </select>
     </div>
 
     <div class="botones">
         <button class="calcular" onclick="calcular()">Calcular aportes</button>
         <button class="nuevo" onclick="nuevoCalculo()">Nuevo cálculo</button>
-    </
+    </div>
+
+    <div id="resultado" class="resultado"></div>
+
+    <div class="explicacion">
+        <h3>¿Cómo funciona esta calculadora?</h3>
+        <p>
+            La calculadora toma como base el <strong>40% del ingreso mensual</strong>,
+            definido como Ingreso Base de Cotización (IBC) para trabajadores independientes
+            y contratistas en Colombia.
+        </p>
+        <ul>
+            <li><strong>Salud:</strong> 12.5% del IBC</li>
+            <li><strong>Pensión:</strong> 16% del IBC</li>
+            <li><strong>ARL:</strong> Según el nivel de riesgo seleccionado</li>
+            <li><strong>Caja de Compensación:</strong> Aporte voluntario</li>
+        </ul>
+        <p>
+            Si el 40% del ingreso es inferior al salario mínimo legal vigente para 2026,
+            el IBC se ajusta automáticamente al mínimo, conforme a la normativa colombiana.
+        </p>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>
+        Herramienta informativa – Valores aproximados según normativa vigente en Colombia.<br>
+        No reemplaza la liquidación oficial de la PILA.<br>
+        © 2026 – Por Enrique Erazo
+    </p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
