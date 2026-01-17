@@ -1,12 +1,19 @@
 // ===============================
-// FORMATO MONEDA COP
+// CONSTANTES
+// ===============================
+
+// SMMLV 2026
+const SMMLV_2026 = 1750905;
+
+// ===============================
+// UTILIDAD – FORMATEO MONEDA COP
 // ===============================
 function formatoCOP(valor) {
   return Math.round(valor).toLocaleString("es-CO");
 }
 
 // ===============================
-// ELEMENTOS
+// ELEMENTOS DEL DOM
 // ===============================
 const ingresoInput = document.getElementById("ingreso");
 const arlCheck = document.getElementById("arlCheck");
@@ -28,7 +35,7 @@ ingresoInput.addEventListener("input", () => {
 });
 
 // ===============================
-// CHECKBOXES
+// EVENTOS DE CHECKBOX
 // ===============================
 arlCheck.addEventListener("change", () => {
   arlNivel.disabled = !arlCheck.checked;
@@ -41,7 +48,7 @@ ccfCheck.addEventListener("change", () => {
 });
 
 // ===============================
-// CALCULAR
+// FUNCIÓN CALCULAR
 // ===============================
 function calcular() {
   const ingreso = Number(ingresoInput.value.replace(/\D/g, ""));
@@ -51,7 +58,13 @@ function calcular() {
     return;
   }
 
-  const ibc = ingreso * 0.4;
+  // ====== CÁLCULO IBC ======
+  let ibcCalculado = ingreso * 0.4;
+
+  // Asegurar que IBC nunca sea menor que SMMLV
+  let ibc = ibcCalculado < SMMLV_2026 ? SMMLV_2026 : ibcCalculado;
+
+  // ====== APORTES ======
   const salud = ibc * 0.125;
   const pension = ibc * 0.16;
 
@@ -67,11 +80,12 @@ function calcular() {
 
   const total = salud + pension + arl + ccf;
 
+  // ====== MOSTRAR RESULTADOS ======
   resultadoDiv.innerHTML = `
     <h3>Resultado</h3>
-    <p><strong>IBC:</strong> $${formatoCOP(ibc)}</p>
-    <p>Salud: $${formatoCOP(salud)}</p>
-    <p>Pensión: $${formatoCOP(pension)}</p>
+    <p><strong>IBC (base mínima cop):</strong> $${formatoCOP(ibc)}</p>
+    <p>Salud (12.5%): $${formatoCOP(salud)}</p>
+    <p>Pensión (16%): $${formatoCOP(pension)}</p>
     <p>ARL: $${formatoCOP(arl)}</p>
     <p>CCF: $${formatoCOP(ccf)}</p>
     <hr>
@@ -80,7 +94,7 @@ function calcular() {
 }
 
 // ===============================
-// NUEVO CÁLCULO
+// FUNCIÓN NUEVO CÁLCULO
 // ===============================
 function nuevoCalculo() {
   ingresoInput.value = "";
