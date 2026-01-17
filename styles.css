@@ -1,52 +1,41 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #efefe9;
-  margin: 0;
-  padding: 0;
-}
+document.getElementById("arlCheck").addEventListener("change", function () {
+  document.getElementById("arlNivel").disabled = !this.checked;
+});
 
-.container {
-  max-width: 520px;
-  margin: auto;
-  background: #f8f7f3;
-  padding: 20px;
-  border-radius: 12px;
-}
+document.getElementById("ccfCheck").addEventListener("change", function () {
+  document.getElementById("ccfPorcentaje").disabled = !this.checked;
+});
 
-h1, h2 {
-  text-align: center;
-  color: #556b2f;
-}
+function calcular() {
+  const ingreso = parseFloat(document.getElementById("ingreso").value);
+  if (ingreso <= 0) {
+    alert("Ingrese un valor válido");
+    return;
+  }
 
-label {
-  font-weight: bold;
-}
+  const ibc = ingreso * 0.4;
 
-input, select, button {
-  width: 100%;
-  margin-top: 8px;
-  margin-bottom: 15px;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
+  const salud = ibc * 0.125;
+  const pension = ibc * 0.16;
 
-button {
-  background: #a3b18a;
-  color: #fff;
-  font-size: 16px;
-  border: none;
-}
+  let arl = 0;
+  if (document.getElementById("arlCheck").checked) {
+    arl = ibc * parseFloat(document.getElementById("arlNivel").value);
+  }
 
-.box {
-  background: #edece6;
-  padding: 10px;
-  border-radius: 8px;
-}
+  let ccf = 0;
+  if (document.getElementById("ccfCheck").checked) {
+    ccf = ibc * parseFloat(document.getElementById("ccfPorcentaje").value);
+  }
 
-footer {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 14px;
-  color: #555;
+  const total = salud + pension + arl + ccf;
+
+  document.getElementById("resultado").innerHTML = `
+    <strong>Ingreso Base de Cotización (40%):</strong> $${ibc.toLocaleString()}<br><br>
+    Salud (12.5%): $${salud.toLocaleString()}<br>
+    Pensión (16%): $${pension.toLocaleString()}<br>
+    ARL: $${arl.toLocaleString()}<br>
+    Caja de Compensación: $${ccf.toLocaleString()}<br><br>
+    <strong>Total aporte: $${total.toLocaleString()}</strong>
+  `;
 }
