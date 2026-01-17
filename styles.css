@@ -1,79 +1,116 @@
-const SMMLV_2026 = 1750905;
-
-const ingresoInput = document.getElementById("ingreso");
-const arlCheck = document.getElementById("arlCheck");
-const arlNivelBox = document.getElementById("arlNivelBox");
-const ccfCheck = document.getElementById("ccfCheck");
-const ccfBox = document.getElementById("ccfBox");
-const resultadoDiv = document.getElementById("resultado");
-
-/* Mostrar / ocultar ARL */
-arlCheck.addEventListener("change", () => {
-    arlNivelBox.classList.toggle("oculto", arlCheck.value === "no");
-});
-
-/* Mostrar / ocultar CCF */
-ccfCheck.addEventListener("change", () => {
-    ccfBox.classList.toggle("oculto", ccfCheck.value === "no");
-});
-
-/* Formato pesos en ingreso */
-ingresoInput.addEventListener("input", () => {
-    let valor = ingresoInput.value.replace(/\D/g, "");
-    ingresoInput.value = valor
-        ? "$ " + Number(valor).toLocaleString("es-CO")
-        : "";
-});
-
-function formatoCOP(valor) {
-    return Math.round(valor).toLocaleString("es-CO");
+:root {
+    --oliva: #7a8450;
+    --champinon: #e7ddc8;
+    --fondo: linear-gradient(135deg, #eef1e6, #e7ddc8);
+    --texto: #2f2f2f;
 }
 
-function calcular() {
-    const ingreso = Number(ingresoInput.value.replace(/\D/g, ""));
-    if (!ingreso) return;
-
-    let ibcCalculado = ingreso * 0.4;
-    let aplicaMinimo = ibcCalculado < SMMLV_2026;
-    let ibc = aplicaMinimo ? SMMLV_2026 : ibcCalculado;
-
-    const salud = ibc * 0.125;
-    const pension = ibc * 0.16;
-
-    let arl = 0;
-    if (arlCheck.value === "si") {
-        arl = ibc * (document.getElementById("arlNivel").value / 100);
-    }
-
-    let ccf = 0;
-    if (ccfCheck.value === "si") {
-        const porcentajeCCF = document.getElementById("ccfPorcentaje").value;
-        ccf = ibc * (porcentajeCCF / 100);
-    }
-
-    const total = salud + pension + arl + ccf;
-
-    resultadoDiv.innerHTML = `
-        ${aplicaMinimo ? `
-        <div class="alerta">
-            El IBC fue ajustado al SMLMV 2026
-            ($${formatoCOP(SMMLV_2026)}).
-        </div>` : ""}
-
-        <div>IBC: $${formatoCOP(ibc)}</div>
-        <div>Salud (12.5%): $${formatoCOP(salud)}</div>
-        <div>Pensión (16%): $${formatoCOP(pension)}</div>
-        <div>ARL: $${formatoCOP(arl)}</div>
-        <div>CCF: $${formatoCOP(ccf)}</div>
-        <div class="total">Total a pagar: $${formatoCOP(total)}</div>
-    `;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--fondo);
+    color: var(--texto);
 }
 
-function nuevoCalculo() {
-    ingresoInput.value = "";
-    resultadoDiv.innerHTML = "";
-    arlCheck.value = "no";
-    ccfCheck.value = "no";
-    arlNivelBox.classList.add("oculto");
-    ccfBox.classList.add("oculto");
+.contenedor {
+    max-width: 600px;
+    margin: 20px auto;
+    background: #ffffffcc;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+h1 {
+    text-align: center;
+    color: var(--oliva);
+}
+
+.intro {
+    text-align: center;
+    font-size: 0.95em;
+}
+
+label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.fila {
+    margin-top: 10px;
+}
+
+.botones {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-calcular {
+    flex: 1;
+    background: var(--oliva);
+    color: white;
+    border: none;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+.btn-nuevo {
+    flex: 1;
+    background: #cfc8b0;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.resultado {
+    margin-top: 20px;
+    background: #f5f3ed;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.resultado .total {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-top: 8px;
+}
+
+.alerta {
+    background: #fff3cd;
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.explicacion {
+    margin-top: 25px;
+    font-size: 0.9em;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    font-size: 2em;
+    color: #555;
+}
+
+.oculto {
+    display: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .botones {
+        flex-direction: column;
+    }
 }
