@@ -39,12 +39,20 @@
     </div>
 
     <div class="fila">
-        <label>¿Aporta a Caja de Compensación? (Voluntario)</label>
-        <select id="ccfCheck">
-            <option value="no">No</option>
-            <option value="si">Sí</option>
-        </select>
-    </div>
+        <label>¿Aporta a Caja de Compensación (CCF)?</label>
+<select id="ccfCheck">
+    <option value="no">No</option>
+    <option value="si">Sí</option>
+</select>
+
+<div id="ccfBox" class="oculto">
+    <label>Seleccione porcentaje CCF</label>
+    <select id="ccfPorcentaje">
+        <option value="0.6">0.6%</option>
+        <option value="2">2%</option>
+        <option value="4">4%</option>
+    </select>
+</div>
 
     <div class="fila oculto" id="ccfBox">
         <label>Porcentaje CCF</label>
