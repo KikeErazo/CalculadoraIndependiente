@@ -1,41 +1,57 @@
-document.getElementById("arlCheck").addEventListener("change", function () {
-  document.getElementById("arlNivel").disabled = !this.checked;
-});
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+  padding: 20px;
+}
 
-document.getElementById("ccfCheck").addEventListener("change", function () {
-  document.getElementById("ccfPorcentaje").disabled = !this.checked;
-});
+.container {
+  background: #fff;
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
 
-function calcular() {
-  const ingreso = parseFloat(document.getElementById("ingreso").value);
-  if (ingreso <= 0) {
-    alert("Ingrese un valor válido");
-    return;
-  }
+h1 {
+  text-align: center;
+  color: #2c3e50;
+}
 
-  const ibc = ingreso * 0.4;
+label {
+  margin-top: 10px;
+  display: block;
+}
 
-  const salud = ibc * 0.125;
-  const pension = ibc * 0.16;
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+}
 
-  let arl = 0;
-  if (document.getElementById("arlCheck").checked) {
-    arl = ibc * parseFloat(document.getElementById("arlNivel").value);
-  }
+.section {
+  margin-top: 15px;
+}
 
-  let ccf = 0;
-  if (document.getElementById("ccfCheck").checked) {
-    ccf = ibc * parseFloat(document.getElementById("ccfPorcentaje").value);
-  }
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  const total = salud + pension + arl + ccf;
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
 
-  document.getElementById("resultado").innerHTML = `
-    <strong>Ingreso Base de Cotización (40%):</strong> $${ibc.toLocaleString()}<br><br>
-    Salud (12.5%): $${salud.toLocaleString()}<br>
-    Pensión (16%): $${pension.toLocaleString()}<br>
-    ARL: $${arl.toLocaleString()}<br>
-    Caja de Compensación: $${ccf.toLocaleString()}<br><br>
-    <strong>Total aporte: $${total.toLocaleString()}</strong>
-  `;
-                             }
+#resultado {
+  margin-top: 20px;
+  background: #eef3ff;
+  padding: 15px;
+  border-radius: 8px;
+}
