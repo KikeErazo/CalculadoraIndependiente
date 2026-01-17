@@ -12,12 +12,12 @@
     <h1>Calculadora de Aportes<br>Independientes y Contratistas</h1>
 
     <p class="intro">
-        Conoce de forma clara y sencilla cuánto debes aportar a seguridad social si eres
-        trabajador independiente o contratista en Colombia, según la normativa vigente.
+        Calcula de forma clara y confiable tus aportes a seguridad social como trabajador
+        independiente o contratista en Colombia, conforme a la normativa vigente.
     </p>
 
     <label for="ingreso">Ingreso mensual (COP)</label>
-    <input type="text" id="ingreso" placeholder="$ 1.423.500">
+    <input type="text" id="ingreso" placeholder="$ 1.750.905">
 
     <div class="fila">
         <label>¿Aporta a ARL?</label>
@@ -46,7 +46,7 @@
         </select>
     </div>
 
-    <div class="fila oculto" id="ccfPorcentajeBox">
+    <div class="fila oculto" id="ccfBox">
         <label>Porcentaje CCF</label>
         <select id="ccfPorcentaje">
             <option value="4">4%</option>
@@ -56,8 +56,8 @@
     </div>
 
     <div class="botones">
-        <button class="calcular" onclick="calcular()">Calcular aportes</button>
-        <button class="nuevo" onclick="nuevoCalculo()">Nuevo cálculo</button>
+        <button class="btn-calcular" onclick="calcular()">Calcular aportes</button>
+        <button class="btn-nuevo" onclick="nuevoCalculo()">Nuevo cálculo</button>
     </div>
 
     <div id="resultado" class="resultado"></div>
@@ -65,9 +65,9 @@
     <div class="explicacion">
         <h3>¿Cómo funciona esta calculadora?</h3>
         <p>
-            La calculadora toma como base el <strong>40% del ingreso mensual</strong>,
-            definido como Ingreso Base de Cotización (IBC) para trabajadores independientes
-            y contratistas en Colombia.
+            El cálculo se realiza tomando como base el <strong>40% del ingreso mensual</strong>,
+            conocido como Ingreso Base de Cotización (IBC), conforme a la normativa colombiana
+            para trabajadores independientes y contratistas.
         </p>
         <ul>
             <li><strong>Salud:</strong> 12.5% del IBC</li>
@@ -76,8 +76,8 @@
             <li><strong>Caja de Compensación:</strong> Aporte voluntario</li>
         </ul>
         <p>
-            Si el 40% del ingreso es inferior al salario mínimo legal vigente para 2026,
-            el IBC se ajusta automáticamente al mínimo, conforme a la normativa colombiana.
+            Cuando el 40% del ingreso es inferior al salario mínimo legal mensual vigente para 2026,
+            el IBC se ajusta automáticamente al mínimo legal.
         </p>
     </div>
 </div>
