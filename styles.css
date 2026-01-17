@@ -1,150 +1,79 @@
-* {
-    box-sizing: border-box;
+const SMMLV_2026 = 1750905;
+
+const ingresoInput = document.getElementById("ingreso");
+const arlCheck = document.getElementById("arlCheck");
+const arlNivelBox = document.getElementById("arlNivelBox");
+const ccfCheck = document.getElementById("ccfCheck");
+const ccfBox = document.getElementById("ccfBox");
+const resultadoDiv = document.getElementById("resultado");
+
+/* Mostrar / ocultar ARL */
+arlCheck.addEventListener("change", () => {
+    arlNivelBox.classList.toggle("oculto", arlCheck.value === "no");
+});
+
+/* Mostrar / ocultar CCF */
+ccfCheck.addEventListener("change", () => {
+    ccfBox.classList.toggle("oculto", ccfCheck.value === "no");
+});
+
+/* Formato pesos en ingreso */
+ingresoInput.addEventListener("input", () => {
+    let valor = ingresoInput.value.replace(/\D/g, "");
+    ingresoInput.value = valor
+        ? "$ " + Number(valor).toLocaleString("es-CO")
+        : "";
+});
+
+function formatoCOP(valor) {
+    return Math.round(valor).toLocaleString("es-CO");
 }
 
-body {
-    font-family: "Segoe UI", Arial, sans-serif;
-    margin: 0;
-    padding: 16px;
-    background: linear-gradient(180deg, #f5f3ec 0%, #ece7db 100%);
-    color: #3f3f3f;
-}
+function calcular() {
+    const ingreso = Number(ingresoInput.value.replace(/\D/g, ""));
+    if (!ingreso) return;
 
-.container {
-    max-width: 540px;
-    margin: auto;
-    background: #ffffff;
-    padding: 24px;
-    border-radius: 16px;
-    box-shadow: 0 8px 22px rgba(0,0,0,0.12);
-}
+    let ibcCalculado = ingreso * 0.4;
+    let aplicaMinimo = ibcCalculado < SMMLV_2026;
+    let ibc = aplicaMinimo ? SMMLV_2026 : ibcCalculado;
 
-h1 {
-    text-align: center;
-    color: #6f7f5b;
-}
+    const salud = ibc * 0.125;
+    const pension = ibc * 0.16;
 
-.intro {
-    text-align: center;
-    font-size: 14px;
-    margin-bottom: 20px;
-}
-
-label {
-    font-weight: 600;
-    margin-top: 14px;
-    display: block;
-}
-
-input, select {
-    width: 100%;
-    padding: 12px;
-    margin-top: 6px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-}
-
-.fila {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 14px;
-}
-
-.fila label {
-    flex: 1;
-}
-
-.fila select {
-    flex: 1;
-}
-
-.botones {
-    display: flex;
-    gap: 12px;
-    margin-top: 24px;
-}
-
-.btn-calcular {
-    flex: 1;
-    background: linear-gradient(135deg, #6f7f5b, #556447);
-    color: white;
-    font-size: 17px;
-    font-weight: bold;
-    padding: 14px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-}
-
-.btn-calcular:hover {
-    filter: brightness(1.05);
-}
-
-.btn-nuevo {
-    flex: 1;
-    background: #e6e1d6;
-    color: #3f3f3f;
-    font-size: 16px;
-    padding: 14px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-}
-
-.resultado {
-    margin-top: 26px;
-    background: #f5f3ec;
-    padding: 18px;
-    border-radius: 14px;
-    font-weight: bold;
-}
-
-.resultado div {
-    margin-bottom: 8px;
-}
-
-.total {
-    font-size: 22px;
-    color: #556447;
-}
-
-.alerta {
-    background: #efe8d5;
-    border-left: 4px solid #b6a97a;
-    padding: 10px;
-    margin-bottom: 12px;
-    font-size: 13px;
-}
-
-.explicacion {
-    margin-top: 28px;
-    font-size: 14px;
-}
-
-.footer {
-    text-align: center;
-    font-size: 12px;
-    color: #666;
-    margin: 26px 0 10px;
-}
-
-.oculto {
-    display: none;
-}
-
-.total {
-    font-weight: bold;
-    font-size: 1.2em;
-}
-
-@media (max-width: 480px) {
-    .fila {
-        flex-direction: column;
-        align-items: stretch;
+    let arl = 0;
+    if (arlCheck.value === "si") {
+        arl = ibc * (document.getElementById("arlNivel").value / 100);
     }
-    .botones {
-        flex-direction: column;
+
+    let ccf = 0;
+    if (ccfCheck.value === "si") {
+        const porcentajeCCF = document.getElementById("ccfPorcentaje").value;
+        ccf = ibc * (porcentajeCCF / 100);
     }
+
+    const total = salud + pension + arl + ccf;
+
+    resultadoDiv.innerHTML = `
+        ${aplicaMinimo ? `
+        <div class="alerta">
+            El IBC fue ajustado al SMLMV 2026
+            ($${formatoCOP(SMMLV_2026)}).
+        </div>` : ""}
+
+        <div>IBC: $${formatoCOP(ibc)}</div>
+        <div>Salud (12.5%): $${formatoCOP(salud)}</div>
+        <div>Pensión (16%): $${formatoCOP(pension)}</div>
+        <div>ARL: $${formatoCOP(arl)}</div>
+        <div>CCF: $${formatoCOP(ccf)}</div>
+        <div class="total">Total a pagar: $${formatoCOP(total)}</div>
+    `;
+}
+
+function nuevoCalculo() {
+    ingresoInput.value = "";
+    resultadoDiv.innerHTML = "";
+    arlCheck.value = "no";
+    ccfCheck.value = "no";
+    arlNivelBox.classList.add("oculto");
+    ccfBox.classList.add("oculto");
 }
