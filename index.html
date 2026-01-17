@@ -1,77 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora de Aportes – Independientes</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Aportes - Independientes</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <div class="container">
-  <h1>Calculadora de Aportes</h1>
-  <h2>Independientes y Contratistas</h2>
+    <h1>Calculadora de Aportes<br>Independientes y Contratistas</h1>
 
-  <label>Ingreso mensual (COP)</label>
-  <input type="text" id="ingreso" placeholder="$0">
+    <label>Ingreso mensual (COP)</label>
+    <input type="text" id="ingreso" placeholder="$0">
 
-<div class="box">
-  <div class="linea">
-    <span>¿Aporta a ARL?</span>
-    <input type="checkbox" id="arlCheck">
-  </div>
+    <div class="fila">
+        <label>¿Aporta a ARL?</label>
+        <select id="arl">
+            <option value="0">No</option>
+            <option value="0.00522">Riesgo I - 0.522%</option>
+            <option value="0.01044">Riesgo II - 1.044%</option>
+            <option value="0.02436">Riesgo III - 2.436%</option>
+            <option value="0.04350">Riesgo IV - 4.350%</option>
+            <option value="0.06960">Riesgo V - 6.960%</option>
+        </select>
+    </div>
 
-  <select id="arlNivel" disabled>
-    <option value="">Seleccione nivel de riesgo</option>
-    <option value="0.522">Riesgo I – 0.522%</option>
-    <option value="1.044">Riesgo II – 1.044%</option>
-    <option value="2.436">Riesgo III – 2.436%</option>
-    <option value="4.350">Riesgo IV – 4.350%</option>
-    <option value="6.960">Riesgo V – 6.960%</option>
-  </select>
-</div>
+    <div class="fila">
+        <label>¿Aporta a Caja de Compensación?</label>
+        <select id="ccf">
+            <option value="0">No</option>
+            <option value="0.04">Sí (4%)</option>
+        </select>
+    </div>
 
-  <div class="box">
-  <div class="linea">
-    <span>¿Aporta a Caja de Compensación? (Voluntario)</span>
-    <input type="checkbox" id="ccfCheck">
-  </div>
-
-  <select id="ccfPorcentaje" disabled>
-    <option value="">Seleccione porcentaje</option>
-    <option value="4">4%</option>
-    <option value="2">2%</option>
-    <option value="0.6">0.6%</option>
-  </select>
-</div>
-
-  <button class="btn-calcular" onclick="calcular()">Calcular aportes</button>
-  <button class="btn-nuevo" onclick="nuevoCalculo()">Nuevo cálculo</button>
-
-  <div id="resultado"></div>
-
-  <hr>
-
-  <h3>¿Cómo funciona esta calculadora?</h3>
-  <p>
-    Esta herramienta permite calcular los aportes a seguridad social de
-    trabajadores independientes y contratistas en Colombia.
-    El cálculo se basa en el <strong>40% del ingreso mensual</strong>,
-    conocido como Ingreso Base de Cotización (IBC).
-  </p>
-
-  <ul>
-    <li>Salud: 12.5% del IBC</li>
-    <li>Pensión: 16% del IBC</li>
-    <li>ARL: según nivel de riesgo</li>
-    <li>Caja de Compensación: aporte voluntario</li>
-  </ul>
-
-  <footer>
-   ®Por: @EnriqueErazo – 2026 © ™
-  </footer>
-</div>
-
-<script src="script.js"></script>
-</body>
-</html>
+    <div class="botones">
+        <button class="calcular" onclick="calcular()">Calcular aportes</button>
+        <button class="nuevo" onclick="nuevoCalculo()">Nuevo cálculo</button>
+    </
