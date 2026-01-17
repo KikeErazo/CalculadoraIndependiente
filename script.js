@@ -1,125 +1,59 @@
-// ===============================
-// CONSTANTES
-// ===============================
-
-// SMMLV 2026
-const SMMLV_2026 = 1750905;
-
-// ===============================
-// UTILIDAD – FORMATEO MONEDA COP
-// ===============================
-function formatoCOP(valor) {
-  return Math.round(valor).toLocaleString("es-CO");
-}
-
-// ===============================
-// ELEMENTOS DEL DOM
-// ===============================
 const ingresoInput = document.getElementById("ingreso");
-const arlCheck = document.getElementById("arlCheck");
-const arlNivel = document.getElementById("arlNivel");
-const ccfCheck = document.getElementById("ccfCheck");
-const ccfPorcentaje = document.getElementById("ccfPorcentaje");
-const resultadoDiv = document.getElementById("resultado");
 
-// ===============================
-// FORMATO INPUT INGRESO
-// ===============================
+// SMLMV 2026 (ajústalo si cambia)
+const SMLMV_2026 = 1600000;
+
 ingresoInput.addEventListener("input", () => {
-  let valor = ingresoInput.value.replace(/\D/g, "");
-  if (valor === "") {
-    ingresoInput.value = "";
-    return;
-  }
-  ingresoInput.value = "$" + Number(valor).toLocaleString("es-CO");
+    let valor = ingresoInput.value.replace(/\D/g, "");
+    ingresoInput.value = formatoPesos(valor);
 });
 
-// ===============================
-// EVENTOS DE CHECKBOX
-// ===============================
-arlCheck.addEventListener("change", () => {
-  arlNivel.disabled = !arlCheck.checked;
-  if (!arlCheck.checked) arlNivel.value = "";
-});
+function formatoPesos(valor) {
+    if (!valor) return "";
+    return "$" + Number(valor).toLocaleString("es-CO");
+}
 
-ccfCheck.addEventListener("change", () => {
-  ccfPorcentaje.disabled = !ccfCheck.checked;
-  if (!ccfCheck.checked) ccfPorcentaje.value = "";
-});
-
-// ===============================
-// FUNCIÓN CALCULAR
-// ===============================
 function calcular() {
-  const ingreso = Number(ingresoInput.value.replace(/\D/g, ""));
+    let ingreso = ingresoInput.value.replace(/\D/g, "");
+    if (!ingreso) return;
 
-  if (!ingreso || ingreso <= 0) {
-    alert("Ingrese un valor válido.");
-    return;
-  }
+    ingreso = Number(ingreso);
 
-  // ====== CÁLCULO IBC ======
-  let ibcCalculado = ingreso * 0.4;
+    // IBC = 40% del ingreso
+    let ibc = ingreso * 0.4;
 
-  // Asegurar que IBC nunca sea menor que SMMLV
-  let ibcCalculado = ingreso * 0.4;
-let aplicaMinimo = false;
+    // IBC mínimo = SMLMV 2026
+    if (ibc < SMLMV_2026) {
+        ibc = SMLMV_2026;
+    }
 
-let ibc;
-if (ibcCalculado < SMMLV_2026) {
-  ibc = SMMLV_2026;
-  aplicaMinimo = true;
-} else {
-  ibc = ibcCalculado;
+    const salud = ibc * 0.125;
+    const pension = ibc * 0.16;
+
+    const arlPorc = Number(document.getElementById("arl").value);
+    const arl = ibc * arlPorc;
+
+    const ccfPorc = Number(document.getElementById("ccf").value);
+    const ccf = ibc * ccfPorc;
+
+    const total = salud + pension + arl + ccf;
+
+    const resultado = document.getElementById("resultado");
+    resultado.classList.remove("oculto");
+
+    resultado.innerHTML = `
+        <div>IBC aplicado: ${formatoPesos(ibc)}</div>
+        <div>Salud (12.5%): ${formatoPesos(Math.round(salud))}</div>
+        <div>Pensión (16%): ${formatoPesos(Math.round(pension))}</div>
+        <div>ARL: ${formatoPesos(Math.round(arl))}</div>
+        <div>Caja de Compensación: ${formatoPesos(Math.round(ccf))}</div>
+        <div class="total">TOTAL A PAGAR: ${formatoPesos(Math.round(total))}</div>
+    `;
 }
 
-  // ====== APORTES ======
-  const salud = ibc * 0.125;
-  const pension = ibc * 0.16;
-
-  let arl = 0;
-  if (arlCheck.checked && arlNivel.value) {
-    arl = ibc * (arlNivel.value / 100);
-  }
-
-  let ccf = 0;
-  if (ccfCheck.checked && ccfPorcentaje.value) {
-    ccf = ibc * (ccfPorcentaje.value / 100);
-  }
-
-  const total = salud + pension + arl + ccf;
-
-  // ====== MOSTRAR RESULTADOS ======
-  resultadoDiv.innerHTML = `
-  <h3>Resultado</h3>
-  <p><strong>IBC:</strong> $${formatoCOP(ibc)}</p>
-
-  ${aplicaMinimo ? `
-    <p class="alerta">
-      ⚠️ El IBC se ajustó al salario mínimo legal vigente 2026
-      ($${formatoCOP(SMMLV_2026)}), conforme a la normativa colombiana.
-    </p>
-  ` : ""}
-
-  <p>Salud (12.5%): $${formatoCOP(salud)}</p>
-  <p>Pensión (16%): $${formatoCOP(pension)}</p>
-  <p>ARL: $${formatoCOP(arl)}</p>
-  <p>CCF: $${formatoCOP(ccf)}</p>
-  <hr>
-  <h4>Total a pagar: $${formatoCOP(total)}</h4>
-`;
-}
-
-// ===============================
-// FUNCIÓN NUEVO CÁLCULO
-// ===============================
 function nuevoCalculo() {
-  ingresoInput.value = "";
-  arlCheck.checked = false;
-  ccfCheck.checked = false;
-  arlNivel.value = "";
-  ccfPorcentaje.value = "";
-  arlNivel.disabled = true;
-  ccfPorcentaje.disabled = true;
-  resultadoDiv.innerHTML = "";
+    ingresoInput.value = "";
+    document.getElementById("arl").value = "0";
+    document.getElementById("ccf").value = "0";
+    document.getElementById("resultado").classList.add("oculto");
 }
