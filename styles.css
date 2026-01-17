@@ -38,4 +38,4 @@ function calcular() {
     Caja de Compensación: $${ccf.toLocaleString()}<br><br>
     <strong>Total aporte: $${total.toLocaleString()}</strong>
   `;
-}
+                             }
