@@ -1,91 +1,76 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora de Aportes – Independientes</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Aportes – Independientes</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<main class="container">
+<div class="container">
+  <h1>Calculadora de Aportes</h1>
+  <h2>Independientes y Contratistas</h2>
 
-  <header>
-    <h1>Calculadora de Aportes para<br>Independientes y Contratistas</h1>
-    <p class="intro">
-      Herramienta diseñada para calcular de forma clara y precisa los aportes
-      a seguridad social en Colombia, conforme a la normativa vigente.
-    </p>
-  </header>
+  <label>Ingreso mensual (COP)</label>
+  <input type="text" id="ingreso" placeholder="$0">
 
-  <section class="form-section">
-    <label>Ingreso mensual (COP)</label>
-    <input type="number" id="ingreso" value="0">
+  <div class="box">
+    <label class="inline">
+      <input type="checkbox" id="arlCheck">
+      ¿Aporta a ARL?
+    </label>
 
-    <!-- ARL -->
-    <div class="section">
-      <div class="row">
-        <span>¿Aporta a ARL?</span>
-        <input type="checkbox" id="arlCheck">
-      </div>
+    <select id="arlNivel" disabled>
+      <option value="">Seleccione nivel de riesgo</option>
+      <option value="0.522">Riesgo I – 0.522%</option>
+      <option value="1.044">Riesgo II – 1.044%</option>
+      <option value="2.436">Riesgo III – 2.436%</option>
+      <option value="4.350">Riesgo IV – 4.350%</option>
+      <option value="6.960">Riesgo V – 6.960%</option>
+    </select>
+  </div>
 
-      <select id="arlNivel" disabled>
-        <option value="0">Seleccione nivel de riesgo</option>
-        <option value="0.00522">Riesgo I – 0.522%</option>
-        <option value="0.01044">Riesgo II – 1.044%</option>
-        <option value="0.02436">Riesgo III – 2.436%</option>
-        <option value="0.04350">Riesgo IV – 4.350%</option>
-        <option value="0.06960">Riesgo V – 6.960%</option>
-      </select>
-    </div>
+  <div class="box">
+    <label class="inline">
+      <input type="checkbox" id="ccfCheck">
+      ¿Aporta a Caja de Compensación? (Voluntario)
+    </label>
 
-    <!-- CCF -->
-    <div class="section">
-      <div class="row">
-        <span>¿Aporta a Caja de Compensación? (Voluntario)</span>
-        <input type="checkbox" id="ccfCheck">
-      </div>
+    <select id="ccfPorcentaje" disabled>
+      <option value="">Seleccione porcentaje</option>
+      <option value="4">4%</option>
+      <option value="2">2%</option>
+      <option value="0.6">0.6%</option>
+    </select>
+  </div>
 
-      <select id="ccfPorcentaje" disabled>
-        <option value="0">Seleccione porcentaje</option>
-        <option value="0.04">4%</option>
-        <option value="0.02">2%</option>
-        <option value="0.006">0.6%</option>
-      </select>
-    </div>
+  <button class="btn-calcular" onclick="calcular()">Calcular aportes</button>
+  <button class="btn-nuevo" onclick="nuevoCalculo()">Nuevo cálculo</button>
 
-    <button onclick="calcular()">Calcular aportes</button>
+  <div id="resultado"></div>
 
-    <div id="resultado"></div>
-  </section>
+  <hr>
 
-  <!-- EXPLICACIÓN -->
-  <section class="info">
-    <h2>¿Cómo funciona esta calculadora?</h2>
-    <p>
-      Esta calculadora toma como base el <strong>40% del ingreso mensual</strong>,
-      definido como el Ingreso Base de Cotización (IBC), conforme a la normativa
-      colombiana para trabajadores independientes y contratistas.
-    </p>
+  <h3>¿Cómo funciona esta calculadora?</h3>
+  <p>
+    Esta herramienta permite calcular los aportes a seguridad social de
+    trabajadores independientes y contratistas en Colombia.
+    El cálculo se basa en el <strong>40% del ingreso mensual</strong>,
+    conocido como Ingreso Base de Cotización (IBC).
+  </p>
 
-    <ul>
-      <li><strong>Salud:</strong> 12.5% del IBC</li>
-      <li><strong>Pensión:</strong> 16% del IBC</li>
-      <li><strong>ARL:</strong> Según nivel de riesgo seleccionado</li>
-      <li><strong>Caja de Compensación:</strong> Aporte voluntario</li>
-    </ul>
+  <ul>
+    <li>Salud: 12.5% del IBC</li>
+    <li>Pensión: 16% del IBC</li>
+    <li>ARL: según nivel de riesgo</li>
+    <li>Caja de Compensación: aporte voluntario</li>
+  </ul>
 
-    <p>
-      El resultado muestra el valor detallado de cada aporte y el total mensual
-      a pagar, ayudando a planificar tus obligaciones y evitar sanciones.
-    </p>
-  </section>
-
-</main>
-
-<footer>
-  <p>Por Enrique Erazo – 2026</p>
-</footer>
+  <footer>
+    Por Enrique Erazo – 2026
+  </footer>
+</div>
 
 <script src="script.js"></script>
 </body>
